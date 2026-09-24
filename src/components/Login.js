@@ -8,11 +8,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const toggleSigninForm = () => {
@@ -46,6 +49,14 @@ const Login = () => {
             displayName: displayName.current.value,
           })
             .then(() => {
+              const { uid, email, displayName } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                }),
+              );
               navigate("/browse");
             })
             .catch((error) => {

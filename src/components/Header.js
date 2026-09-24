@@ -1,8 +1,10 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const handleSignOut = () => {
     signOut(auth)
@@ -23,16 +25,18 @@ const Header = () => {
           className='w-40 p-5 bg-gradient-to-b from-black'
         />
       </div>
-      <div className='flex items-center gap-4 p-2'>
-        <img
-          src='https://i.pinimg.com/1200x/2f/3f/02/2f3f0210ddd06dcb863a689d93e99345.jpg'
-          alt='netflix-profile-image'
-          className='w-12 h-12 object-cover rounded-full cursor-pointer'
-        />
-        <button className='cursor-pointer' onClick={handleSignOut}>
-          Sign Out
-        </button>
-      </div>
+      {user && (
+        <div className='flex items-center gap-4 p-2'>
+          <img
+            src='https://i.pinimg.com/1200x/2f/3f/02/2f3f0210ddd06dcb863a689d93e99345.jpg'
+            alt='netflix-profile-image'
+            className='w-12 h-12 object-cover rounded-full cursor-pointer'
+          />
+          <button className='cursor-pointer' onClick={handleSignOut}>
+            Sign Out
+          </button>
+        </div>
+      )}
     </div>
   );
 };

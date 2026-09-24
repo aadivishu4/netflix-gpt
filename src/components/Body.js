@@ -24,7 +24,6 @@ const Body = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
-        console.log("checking user......", user);
         dispatch(
           addUser({
             uid: uid,
