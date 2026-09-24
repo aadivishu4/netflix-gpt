@@ -1,7 +1,6 @@
 import Header from "./Header";
 import { useState, useRef } from "react";
 import { checkValidData } from "../utils/validate";
-import { useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,16 +9,15 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { NETFLIX_BG_IMG } from "../utils/constant";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const toggleSigninForm = () => {
-    console.log("toggle clicked...");
     setIsSignInForm(!isSignInForm);
   };
 
@@ -34,9 +32,7 @@ const Login = () => {
     if (message) return;
 
     // sign up or sign in logic:
-    debugger;
     if (!isSignInForm) {
-      // sign up logic
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -44,7 +40,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("user data => ", user);
           updateProfile(auth.currentUser, {
             displayName: displayName.current.value,
           })
@@ -57,19 +52,15 @@ const Login = () => {
                   displayName: displayName,
                 }),
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error);
-              console.log(error);
             });
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorCode + "-" + errorMessage);
-          console.log("error ===> ", errorCode);
-          console.log("error message ===> ", errorMessage);
         });
     } else {
       signInWithEmailAndPassword(
@@ -78,17 +69,12 @@ const Login = () => {
         password.current.value,
       )
         .then((userCredential) => {
-          // Signed in
           const user = userCredential.user;
-          console.log("sign in user ===> ", user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorCode + "-" + errorMessage);
-          console.log("error ===> ", errorCode);
-          console.log("error message ===> ", errorMessage);
         });
     }
   };
@@ -97,10 +83,7 @@ const Login = () => {
     <div>
       <Header />
       <div className='absolute'>
-        <img
-          src='https://assets.nflxext.com/ffe/siteui/vlv3/4263c437-c678-4724-ad80-e3ba0dc8761e/web/IN-en-20260921-TRIFECTA-perspective_95810136-2c4a-4ab4-a323-50418521e261_large.jpg'
-          alt='bg-image'
-        />
+        <img src={NETFLIX_BG_IMG} alt='bg-image' />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
