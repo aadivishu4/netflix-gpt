@@ -12,7 +12,6 @@ const useRecommendedMovies = (movieId) => {
     const json = await data.json();
     const recommendeMovies = json?.results;
 
-    console.log("check json ===> ", json);
     if (recommendeMovies.length > 0) {
       dispatch(addRecommendedMovies(recommendeMovies));
     } else {

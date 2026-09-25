@@ -17,3 +17,18 @@ export const TMDB_API_OPTIONS = {
     Authorization: "Bearer " + process.env.REACT_APP_TMDB_ACCESS_TOKEN,
   },
 };
+
+export const SUPPORTED_LANGUAGES = [
+  {
+    identifier: "eng",
+    name: "English",
+  },
+  {
+    identifier: "hindi",
+    name: "Hindi",
+  },
+  {
+    identifier: "spanish",
+    name: "Spanish",
+  },
+];
