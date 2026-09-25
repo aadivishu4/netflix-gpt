@@ -3,6 +3,7 @@ import Browse from "./Browse";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import VideoPreview from "./VideoPreview";
+import Error from "./Error";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -21,6 +22,10 @@ const Body = () => {
     {
       path: "/browse/:id",
       element: <VideoPreview />,
+    },
+    {
+      path: "*",
+      element: <Error />,
     },
   ]);
 

@@ -1,7 +1,9 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 import Header from "./Header";
+import { useSelector } from "react-redux";
 
 const Error = () => {
+  const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const error = useRouteError();
 
@@ -40,7 +42,9 @@ const Error = () => {
         )}
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => {
+            user ? navigate("/browse") : navigate("/");
+          }}
           className='mt-8 bg-white text-black font-semibold px-7 py-3 rounded hover:bg-gray-300 transition duration-200'>
           Netflix Home
         </button>

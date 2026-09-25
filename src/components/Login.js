@@ -1,5 +1,5 @@
 import Header from "./Header";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
@@ -26,6 +26,10 @@ const Login = () => {
   const displayName = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+
+  useEffect(() => {
+    navigate("/login");
+  }, [isSignInForm]);
 
   const handleButtonClick = () => {
     const message = checkValidData(email.current.value, password.current.value);
@@ -54,6 +58,9 @@ const Login = () => {
                   displayName: displayName,
                 }),
               );
+              // changing the state so that it directly comes in logged in screen
+              setIsSignInForm(!isSignInForm);
+              navigate("/logn");
             })
             .catch((error) => {
               setErrorMessage(error);
@@ -85,7 +92,7 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className='absolute'>
+      <div className='absolute h-screen overflow-hidden flex items-center justify-center'>
         <img src={NETFLIX_BG_IMG} alt='bg-image' />
       </div>
       <form

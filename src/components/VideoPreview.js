@@ -31,9 +31,6 @@ const VideoPreview = () => {
         }
 
         const json = await response.json();
-
-        console.log("Video response ===>", json);
-
         const youtubeVideos =
           json.results?.filter((video) => video.site === "YouTube") || [];
 
