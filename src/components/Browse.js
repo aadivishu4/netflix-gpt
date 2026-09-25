@@ -1,15 +1,22 @@
 import Header from "./Header";
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
+import usePopularMovies from "../hooks/usePopularMovies";
+import useTopRateMovies from "../hooks/useTopRateMovies";
+import useUpcommingMovies from "../hooks/useUpcommingMovies";
 import MainContainer from "./MainContainer";
-import SecondaryConatiner from "./SecondaryContainer";
+import SecondaryContainer from "./SecondaryContainer";
+
 const Browse = () => {
   useNowPlayingMovies();
+  usePopularMovies();
+  useTopRateMovies();
+  useUpcommingMovies();
 
   return (
-    <div>
+    <div className='bg-black min-h-screen'>
       <Header />
       <MainContainer />
-      <SecondaryConatiner />
+      <SecondaryContainer />
     </div>
   );
 };

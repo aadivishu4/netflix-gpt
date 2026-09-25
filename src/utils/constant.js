@@ -8,6 +8,8 @@ export const NETFLIX_BG_IMG =
   "https://assets.nflxext.com/ffe/siteui/vlv3/4263c437-c678-4724-ad80-e3ba0dc8761e/web/IN-en-20260921-TRIFECTA-perspective_95810136-2c4a-4ab4-a323-50418521e261_large.jpg";
 
 export const TMDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
+
+export const TMDB_IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
 export const TMDB_API_OPTIONS = {
   method: "GET",
   headers: {

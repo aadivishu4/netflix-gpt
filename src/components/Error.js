@@ -19,14 +19,7 @@ const Error = () => {
       {/* Dark Overlay */}
       <div className='absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black' />
 
-      {/* Netflix Logo */}
-      {/* <div className='absolute top-0 left-0 z-20 px-8 py-6 md:px-14'>
-        <h1
-          onClick={() => navigate("/")}
-          className='text-red-600 text-3xl md:text-5xl font-black tracking-tight cursor-pointer'>
-          NETFLIX
-        </h1>
-      </div> */}
+      {/* Header Added */}
       <Header />
 
       {/* Error Content */}
