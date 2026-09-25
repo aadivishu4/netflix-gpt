@@ -1,10 +1,11 @@
 import GptSearchBar from "./GptSearchBar";
-import GptMoviesSuggestion from "./GptMoviesSuggestion";
+import GptMovieSuggestions from "./GptMoviesSuggestion";
+
 const GptSearch = () => {
   return (
-    <div>
+    <div className='bg-black min-h-screen'>
       <GptSearchBar />
-      <GptMoviesSuggestion />
+      <GptMovieSuggestions />
     </div>
   );
 };

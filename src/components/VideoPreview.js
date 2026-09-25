@@ -1,63 +1,101 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import Header from "./Header";
-import { TMDB_API_OPTIONS, TMDB_BASE_URL } from "../utils/constant";
+import NetflixLoader from "./NetflixLoader";
+import NoVideoAvailable from "./NoVideoAvailable";
+
+import { TMDB_API_OPTIONS } from "../utils/constant";
 
 const VideoPreview = () => {
-  const params = useParams();
-  const { id: movieId } = params;
-  console.log("vide preview component check", movieId);
+  const { id: movieId } = useParams();
 
   const [trailerKey, setTrailerKey] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!movieId) return;
 
-    getMovieTrailer(movieId);
+    const getMovieTrailer = async () => {
+      try {
+        setLoading(true);
+        setTrailerKey(null);
+
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${movieId}/videos`,
+          TMDB_API_OPTIONS,
+        );
+
+        if (!response.ok) {
+          throw new Error(`TMDB request failed: ${response.status}`);
+        }
+
+        const json = await response.json();
+
+        console.log("Video response ===>", json);
+
+        const youtubeVideos =
+          json.results?.filter((video) => video.site === "YouTube") || [];
+
+        const trailer = youtubeVideos.find((video) => video.type === "Trailer");
+
+        const teaser = youtubeVideos.find((video) => video.type === "Teaser");
+
+        const selectedVideo = trailer || teaser || youtubeVideos[0];
+
+        setTrailerKey(selectedVideo?.key ?? null);
+      } catch (error) {
+        console.error("Error fetching trailer:", error);
+
+        setTrailerKey(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getMovieTrailer();
   }, [movieId]);
 
-  const getMovieTrailer = async (movieId) => {
-    const response = await fetch(
-      `${TMDB_BASE_URL + movieId}/videos`,
-      TMDB_API_OPTIONS,
-    );
-
-    const json = await response.json();
-    console.log("check preview json", json);
-    debugger;
-
-    const trailers = json.results?.filter((video) => video.type === "Trailer");
-
-    const trailer = trailers?.[0] || json.results?.[0];
-
-    setTrailerKey(trailer?.key);
-  };
-
-  if (!trailerKey) {
+  // 1. Request is still running
+  if (loading) {
     return (
-      <div className='min-h-screen bg-black text-white'>
+      <div className='h-screen bg-black text-white'>
         <Header />
-
-        <div className='flex min-h-screen items-center justify-center'>
-          Loading trailer...
-        </div>
+        <NetflixLoader />
       </div>
     );
   }
 
+  // 2. Request finished but no video exists
+  if (!trailerKey) {
+    return (
+      <div className='h-screen bg-black text-white'>
+        <Header />
+        <NoVideoAvailable />
+      </div>
+    );
+  }
+
+  // 3. Video exists
   return (
     <div className='h-screen bg-black overflow-hidden'>
       <Header />
 
-      <div className='h-full pt-20'>
-        <iframe
-          className='w-full h-full'
-          src={`https://www.youtube.com/embed/${trailerKey}`}
-          title='Movie Trailer'
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-          allowFullScreen
-        />
-      </div>
+      <iframe
+        className='w-full h-full'
+        src={`https://www.youtube.com/embed/${trailerKey}`}
+        title='Movie Trailer'
+        allow='
+          accelerometer;
+          autoplay;
+          clipboard-write;
+          encrypted-media;
+          gyroscope;
+          picture-in-picture;
+          web-share
+        '
+        allowFullScreen
+      />
     </div>
   );
 };
