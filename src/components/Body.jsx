@@ -21,7 +21,7 @@ const Body = () => {
       element: <Browse />,
     },
     {
-      path: "/browse/:id",
+      path: "/preview/:id",
       element: <VideoPreview />,
     },
     {

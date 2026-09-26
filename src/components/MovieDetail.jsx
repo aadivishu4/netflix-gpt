@@ -20,17 +20,11 @@ const MovieDetail = () => {
       }
 
       try {
-        // Start loader
         setLoading(true);
-
-        // Clear previous movie
         setMovie(null);
-
-        // Clear previous error
         setError(null);
 
         const movieDetailUrl = TMDB_BASE_URL + movieId;
-
         const response = await fetch(movieDetailUrl, TMDB_API_OPTIONS);
 
         if (!response.ok) {
@@ -38,8 +32,6 @@ const MovieDetail = () => {
         }
 
         const movieDetail = await response.json();
-
-        console.log("Movie Detail ===>", movieDetail);
 
         /*
          * TEMPORARY:
@@ -67,7 +59,7 @@ const MovieDetail = () => {
     getMovieDetail();
   }, [movieId]);
   const handlePreview = () => {
-    navigate(`/browse/${movieId}`);
+    navigate(`/preview/${movieId}`);
   };
 
   if (loading) {
