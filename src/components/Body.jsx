@@ -3,6 +3,7 @@ import Browse from "./Browse";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import VideoPreview from "./VideoPreview";
+import MovieDetail from "./MovieDetail";
 import Error from "./Error";
 
 const Body = () => {
@@ -22,6 +23,10 @@ const Body = () => {
     {
       path: "/browse/:id",
       element: <VideoPreview />,
+    },
+    {
+      path: "/movie/:id",
+      element: <MovieDetail />,
     },
     {
       path: "*",

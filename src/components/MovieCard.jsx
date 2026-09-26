@@ -5,16 +5,13 @@ const MovieCard = ({ movieId, posterPath }) => {
   const navigate = useNavigate();
   if (!posterPath) return null;
 
-  const handleMovieClick = (value) => {
-    console.log("movie id ", movieId);
-    navigate(`/browse/${movieId}`);
-    console.log("debugger check");
-    debugger;
+  const handleMovieDetail = (value) => {
+    navigate(`/movie/${movieId}`);
   };
 
   return (
     <div
-      onClick={handleMovieClick}
+      onClick={handleMovieDetail}
       className='w-48 min-w-48 flex-shrink-0 relative z-0
       origin-center transform-gpu transition-transform duration-300 ease-out
       hover:scale-110 hover:z-50 cursor-pointer'>

@@ -53,7 +53,6 @@ const VideoPreview = () => {
     getMovieTrailer();
   }, [movieId]);
 
-  // 1. Request is still running
   if (loading) {
     return (
       <div className='h-screen bg-black text-white'>
@@ -63,7 +62,6 @@ const VideoPreview = () => {
     );
   }
 
-  // 2. Request finished but no video exists
   if (!trailerKey) {
     return (
       <div className='h-screen bg-black text-white'>
@@ -73,27 +71,29 @@ const VideoPreview = () => {
     );
   }
 
-  // 3. Video exists
   return (
-    <div className='h-screen bg-black overflow-hidden'>
+    <>
       <Header />
 
-      <iframe
-        className='w-full h-full'
-        src={`https://www.youtube.com/embed/${trailerKey}`}
-        title='Movie Trailer'
-        allow='
-          accelerometer;
-          autoplay;
-          clipboard-write;
-          encrypted-media;
-          gyroscope;
-          picture-in-picture;
-          web-share
+      <div className='fixed inset-0 h-screen w-screen overflow-hidden bg-black'>
+        <iframe
+          className='
+          absolute
+          left-1/2
+          top-1/2
+          h-[130vh]
+          w-[130vw]
+          -translate-x-1/2
+          -translate-y-1/2
+          border-0
         '
-        allowFullScreen
-      />
-    </div>
+          src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=0&controls=1&loop=1&playlist=${trailerKey}&rel=0&playsinline=1&disablekb=0`}
+          title='Movie trailer'
+          allow='autoplay; encrypted-media; picture-in-picture'
+          allowFullScreen
+        />
+      </div>
+    </>
   );
 };
 
